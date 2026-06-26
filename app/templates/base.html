@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Lumen · Aurora{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('pages.index') }}">
+      <span class="brand-mark"></span>
+      Lumen<em>.</em>
+      <span class="brand-tag">vol · i</span>
+    </a>
+    <nav class="site-nav">
+      <a href="{{ url_for('pages.index') }}">Read</a>
+      <a href="{{ url_for('pages.history') }}">Atlas</a>
+      <a href="#field-notes">Field notes</a>
+    </nav>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  <footer class="site-footer">
+    <span>Lumen · local · open models</span>
+    <span><span class="dot">●</span> reading on this machine only</span>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
