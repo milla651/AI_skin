@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}Lumen · Read your skin, softly.{% endblock %}
+
+{% block content %}
+<main class="hero">
+  <p class="eyebrow">Lumen · Vol. I · A quiet portrait</p>
+
+  <h1 class="display">
+    <span class="line">Read your skin,</span>
+    <span class="softly"><em>softly.</em></span>
+  </h1>
+
+  <div class="portrait-wrap">
+    <img
+      id="hero-portrait"
+      src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=80&auto=format&fit=crop"
+      alt="A quiet portrait"
+    />
+  </div>
+
+  <p class="lede">
+    An open-source reading of light, texture and tone.<br />
+    Take a portrait — watch your face become the score.
+  </p>
+
+  <!-- orbiting glass cards -->
+  <div class="orbit" aria-hidden="true">
+    <article class="card tl">
+      <div class="num">01 · HUE</div>
+      <div class="name">Tone &amp; flush</div>
+      <div class="val"><b id="card-hue-val">+12</b> ΔE · warm</div>
+      <div class="bar"><i style="width:42%"></i></div>
+    </article>
+    <article class="card bl">
+      <div class="num">02 · TEXTURE</div>
+      <div class="name">Surface read</div>
+      <div class="val"><b id="card-tex-val">2.3</b> σ · smooth</div>
+      <div class="bar"><i style="width:28%"></i></div>
+    </article>
+    <article class="card tr">
+      <div class="num">03 · PORES</div>
+      <div class="name">Open count</div>
+      <div class="val"><b id="card-pore-val">18%</b> · cheek</div>
+      <div class="bar"><i style="width:18%"></i></div>
+    </article>
+    <article class="card br">
+      <div class="num">04 · HYDRATION</div>
+      <div class="name">Light return</div>
+      <div class="val"><b id="card-hyd-val">76%</b> · balanced</div>
+      <div class="bar"><i style="width:76%"></i></div>
+    </article>
+  </div>
+
+  <!-- arc + timestamps -->
+  <div class="arc" aria-hidden="true">
+    <svg viewBox="0 0 720 180" preserveAspectRatio="none">
+      <path d="M 20 30 Q 360 230 700 30" />
+      <circle class="dot-anchor" cx="20" cy="30" r="4" />
+      <circle class="dot-head"   cx="360" cy="155" r="6" />
+      <text class="ts" x="14"  y="14" text-anchor="start">00:00</text>
+      <text class="ts" x="706" y="14" text-anchor="end">00:37</text>
+    </svg>
+  </div>
+</main>
+
+<!-- play bar -->
+<div class="playbar" id="playbar">
+  <button class="play" id="open-sheet" aria-label="Begin reading">
+    <svg viewBox="0 0 14 14"><polygon points="2,1 13,7 2,13" fill="currentColor"/></svg>
+  </button>
+  <div class="rail"><i></i></div>
+  <div class="ts">00:37</div>
+</div>
+
+<!-- =========================== curtain sheet =========================== -->
+<div class="scrim" id="scrim"></div>
+<section class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet-head">
+    <p class="eyebrow">Step one · capture</p>
+    <button class="sheet-close" id="sheet-close" aria-label="Close">
+      <svg viewBox="0 0 14 14" width="14" height="14">
+        <path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <h2 class="sheet-title">Drop a portrait, <em>softly.</em></h2>
+  <p class="sheet-sub">
+    PNG · JPG · WEBP — up to 10MB · or paste from clipboard with
+    <kbd>⌘</kbd>/<kbd>Ctrl</kbd>+<kbd>V</kbd>.
+  </p>
+
+  <div class="sheet-stage">
+    <div class="flip" id="flip">
+      <!-- FRONT: dropzone -->
+      <div class="face front">
+        <label class="dropzone" id="dropzone">
+          <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" hidden />
+          <div class="dz-inner">
+            <svg class="dz-face" viewBox="0 0 100 100" aria-hidden="true">
+              <path class="draw" d="
+                M 50 12
+                C 70 12, 82 30, 82 50
+                C 82 72, 68 88, 50 88
+                C 32 88, 18 72, 18 50
+                C 18 30, 30 12, 50 12 Z
+                M 36 44 q 0 -3 3 -3 q 3 0 3 3
+                M 58 44 q 0 -3 3 -3 q 3 0 3 3
+                M 42 64 q 8 6 16 0
+              " />
+            </svg>
+            <h3 class="dz-title">Drop a portrait here</h3>
+            <p class="dz-hint">click · drag · or paste <kbd>⌘V</kbd></p>
+          </div>
+          <div class="dz-preview"><img id="preview" alt="" /></div>
+        </label>
+      </div>
+
+      <!-- BACK: webcam -->
+      <div class="face back">
+        <div class="webcam-face">
+          <video id="webcam" autoplay playsinline muted></video>
+          <canvas id="snap" hidden></canvas>
+          <div class="reticle"><div class="oval"></div></div>
+          <div class="badge"><span class="live"></span>live</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-actions">
+    <button class="toggle-cam" id="toggle-cam" type="button">
+      ⤺ flip to camera
+    </button>
+    <button class="read-cta" id="read-cta" type="button" disabled>
+      <span class="spinner"></span>
+      <span class="arrow">▶</span>
+      Read my skin
+    </button>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sheet.js') }}" defer></script>
+{% endblock %}
