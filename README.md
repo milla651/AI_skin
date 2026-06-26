@@ -36,7 +36,7 @@ AI_skin/
 
 ---
 
-## 2 · Prereqs (you said these are already installed locally)
+## 2 · Prereqs
 
 - Python 3.11+
 - PostgreSQL running on `localhost:5432` (DB `postgres`)
@@ -69,7 +69,7 @@ flask db upgrade
 
 ---
 
-## 4 · Run it (you need 2 terminals)
+## 4 · Run it 
 
 ### Terminal A — Flask
 ```powershell
