@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Lumen · Atlas{% endblock %}
+
+{% block content %}
+<main class="atlas">
+  <header class="atlas-head">
+    <p class="eyebrow" style="margin-bottom:14px;">Atlas · every reading</p>
+    <h1 class="atlas-title">A quiet archive,<br /><em>kept softly.</em></h1>
+  </header>
+
+  {% if items %}
+  <ul class="atlas-grid">
+    {% for a in items %}
+    <li class="atlas-card">
+      <a href="{{ url_for('pages.result', analysis_id=a.id) }}">
+        <div class="id">#{{ a.id|string|truncate(8, True, '') }}</div>
+        <div class="num">
+          {% if a.result and a.result.overall_score is not none %}
+            {{ a.result.overall_score }}<small>/100</small>
+          {% else %}
+            —
+          {% endif %}
+        </div>
+        <div class="meta">
+          <span class="dot {{ a.status }}" style="width:8px;height:8px;border-radius:50%;background:#ff3d2e;"></span>
+          <span>{{ a.status }}</span>
+          <span style="margin-left:auto;text-transform:none;letter-spacing:.06em;">
+            {{ a.created_at.strftime('%b %d · %H:%M') }}
+          </span>
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="atlas-empty">
+    No readings yet. <a href="{{ url_for('pages.index') }}" style="color:var(--accent);">take your first</a>.
+  </p>
+  {% endif %}
+</main>
+{% endblock %}
