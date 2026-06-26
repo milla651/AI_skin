@@ -23,3 +23,6 @@ mlflow.db
 .DS_Store
 Thumbs.db
 migrations/alembic.ini
+migrations/README
+migrations/script.py.mako
+migrations/versions/fb8beace83a7_create_ai_skin_analyses.py
