@@ -1,0 +1,32 @@
+# --- Web ---
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+Flask-Migrate==4.0.7
+python-dotenv==1.0.1
+gunicorn==22.0.0
+
+# --- DB ---
+psycopg2-binary==2.9.9
+SQLAlchemy==2.0.32
+
+# --- Async ---
+celery==5.4.0
+redis==5.0.8
+
+# --- ML / CV ---
+numpy==1.26.4
+opencv-python==4.10.0.84
+Pillow==10.4.0
+scikit-image==0.24.0
+mediapipe==0.10.14
+torch==2.3.1
+torchvision==0.18.1
+transformers==4.44.2
+huggingface-hub==0.24.6
+safetensors==0.4.4
+
+# --- Tracking ---
+mlflow==2.16.0
+
+# --- Utils ---
+pydantic==2.8.2
