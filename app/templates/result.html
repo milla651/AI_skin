@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Lumen · Reading #{{ analysis.id|string|truncate(8, True, '') }}{% endblock %}
+
+{% block content %}
+<main class="report" data-analysis-id="{{ analysis.id }}">
+  <p class="report-meta">
+    <span id="r-status-dot" class="dot pending"></span>
+    <span>READING · {{ analysis.id|string|truncate(8, True, '') }}</span>
+    <span>·</span>
+    <span id="r-status-text">queued</span>
+  </p>
+
+  <h1 class="score-hero">
+    <span id="r-score">—</span><span class="slash">/</span><small id="r-score-100">100</small>
+  </h1>
+
+  <p class="skintype">Skin type · <b id="r-skintype">—</b></p>
+
+  <div class="r-portrait portrait-wrap">
+    <img id="r-image" alt="Your portrait" />
+  </div>
+
+  <!-- orbiting glass cards, but bound to live metrics -->
+  <div class="orbit" aria-hidden="true">
+    <article class="card tl" data-metric="redness">
+      <div class="num">01 · REDNESS</div>
+      <div class="name">Flush &amp; flare</div>
+      <div class="val"><b data-val>—</b> · index</div>
+      <div class="bar"><i data-bar style="width:0%"></i></div>
+    </article>
+    <article class="card bl" data-metric="pigmentation">
+      <div class="num">02 · PIGMENTATION</div>
+      <div class="name">Spotted tone</div>
+      <div class="val"><b data-val>—</b> · index</div>
+      <div class="bar"><i data-bar style="width:0%"></i></div>
+    </article>
+    <article class="card tr" data-metric="pores">
+      <div class="num">03 · PORES</div>
+      <div class="name">Open count</div>
+      <div class="val"><b data-val>—</b>% · cheek</div>
+      <div class="bar"><i data-bar style="width:0%"></i></div>
+    </article>
+    <article class="card br" data-metric="wrinkles">
+      <div class="num">04 · WRINKLES</div>
+      <div class="name">Fine lines</div>
+      <div class="val"><b data-val>—</b> · index</div>
+      <div class="bar"><i data-bar style="width:0%"></i></div>
+    </article>
+  </div>
+
+  <section class="recs" id="r-recs" hidden>
+    <h3>Field notes</h3>
+    <ul id="r-rec-list"></ul>
+  </section>
+</main>
+
+<!-- playbar for visual continuity -->
+<div class="playbar">
+  <a class="play" href="{{ url_for('pages.index') }}" aria-label="New reading">
+    <svg viewBox="0 0 14 14"><polygon points="2,1 13,7 2,13" fill="currentColor"/></svg>
+  </a>
+  <div class="rail"><i></i></div>
+  <div class="ts" id="r-ts">—</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.__ANALYSIS_ID__ = "{{ analysis.id }}";
+</script>
+<script src="{{ url_for('static', filename='js/result.js') }}" defer></script>
+{% endblock %}
