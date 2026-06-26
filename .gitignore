@@ -1,0 +1,24 @@
+# Env / secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# Uploads & artifacts
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+mlruns/
+mlflow.db
+
+# OS
+.DS_Store
+Thumbs.db
