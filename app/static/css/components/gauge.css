@@ -1,0 +1,168 @@
+/* ======================================================================
+   LUMEN · Gauge component
+   §6.1 of IMPLEMENTATION.md — 270° radial arc, animated value,
+   severity-coloured stroke.
+   ====================================================================== */
+
+.gauge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  .gauge-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+}
+@media (max-width: 520px) {
+  .gauge-grid { grid-template-columns: 1fr; }
+}
+
+.gauge {
+  --gauge-size: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-5) var(--space-4);
+  background: var(--surface-1);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-base) var(--ease-ui),
+              box-shadow var(--dur-base) var(--ease-ui);
+}
+.gauge:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
+}
+
+.gauge .gauge-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-3);
+}
+
+.gauge .gauge-svg {
+  width: var(--gauge-size);
+  height: var(--gauge-size);
+  display: block;
+}
+
+.gauge .gauge-track {
+  stroke: var(--ink-faint);
+  opacity: 0.4;
+}
+[data-theme="dark"] .gauge .gauge-track {
+  stroke: var(--ink-faint);
+  opacity: 0.5;
+}
+.gauge .gauge-arc {
+  stroke: var(--accent);
+  transition: stroke-dashoffset 900ms var(--ease-ui),
+              stroke var(--dur-base) var(--ease-ui);
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+.gauge[data-severity="good"] .gauge-arc { stroke: var(--status-good); }
+.gauge[data-severity="warn"] .gauge-arc { stroke: var(--status-warn); }
+.gauge[data-severity="bad"]  .gauge-arc { stroke: var(--status-bad); }
+
+.gauge .gauge-value {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  fill: var(--ink);
+  text-anchor: middle;
+  letter-spacing: -0.02em;
+}
+.gauge .gauge-unit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-soft);
+  letter-spacing: 0.16em;
+}
+
+.gauge .gauge-name {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--ink);
+  margin-top: var(--space-3);
+  line-height: 1.1;
+}
+
+/* ---------- Tip block below each gauge ---------- */
+.gauge .gauge-tip {
+  margin-top: var(--space-3);
+  width: 100%;
+}
+.gauge .gauge-tip-short {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  user-select: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  transition: background var(--dur-fast) var(--ease-ui),
+              border-color var(--dur-fast) var(--ease-ui);
+}
+.gauge .gauge-tip-short:hover {
+  background: var(--surface-2);
+  border-color: var(--surface-edge);
+}
+.gauge .gauge-tip-short::after {
+  content: " ▾";
+  opacity: 0.5;
+  font-size: 9px;
+}
+.gauge .gauge-tip[aria-expanded="true"] .gauge-tip-short::after {
+  content: " ▴";
+}
+
+.gauge .gauge-tip-long {
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-md);
+  text-align: left;
+  display: none;
+}
+.gauge .gauge-tip[aria-expanded="true"] .gauge-tip-long {
+  display: block;
+  animation: tip-expand var(--dur-base) var(--ease-ui);
+}
+.gauge .gauge-tip-long ul {
+  display: grid;
+  gap: var(--space-2);
+}
+.gauge .gauge-tip-long li {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink);
+  line-height: 1.5;
+  padding-left: var(--space-3);
+  position: relative;
+}
+.gauge .gauge-tip-long li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@keyframes tip-expand {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
