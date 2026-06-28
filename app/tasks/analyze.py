@@ -42,6 +42,27 @@ def run_analysis(self, analysis_id: str) -> dict:
         raise
 
 
+def _derive_skin_type(m: dict) -> str:
+    """Deterministic rule documented in docs/IMPLEMENTATION.md §6.3.1.
+
+    Shared by the mock and (later) the real ML pipeline, so the UI's
+    contract stays stable when real models replace this stub.
+    """
+    pores = m.get("pores", 0)
+    acne = m.get("acne", 0)
+    redness = m.get("redness", 0)
+    wrinkles = m.get("wrinkles", 0)
+    dark_circles = m.get("dark_circles", 0)
+
+    if pores >= 55 and acne >= 25:
+        return "oily"
+    if redness >= 50 and wrinkles >= 35 and pores < 35:
+        return "dry"
+    if pores >= 45 and (acne < 20 or dark_circles >= 35):
+        return "combination"
+    return "normal"
+
+
 def _mock_result() -> dict:
     """Random but believable-looking skin metrics so the UI is testable."""
     metrics = {
@@ -54,10 +75,10 @@ def _mock_result() -> dict:
     }
     overall = 100 - int(sum(metrics.values()) / len(metrics))
     return {
-        "version": "stub-0.1",
+        "version": "stub-0.2",
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "overall_score": overall,
-        "skin_type": random.choice(["oily", "dry", "normal", "combination"]),
+        "skin_type": _derive_skin_type(metrics),
         "metrics": metrics,
         "recommendations": [
             "Use a broad-spectrum SPF 30+ daily.",
