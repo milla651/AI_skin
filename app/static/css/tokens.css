@@ -1,0 +1,134 @@
+/* ======================================================================
+   LUMEN · Tokens — single source of truth for colours, type, space, motion.
+   §4 of docs/IMPLEMENTATION.md. No raw hex outside this file.
+   ====================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/geist-font@1.0.0/dist/geist-mono.min.css');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ---------- Theme-agnostic tokens (typography, space, motion) ---------- */
+:root {
+  /* Type */
+  --font-serif: 'Instrument Serif', 'Times New Roman', serif;
+  --font-mono:  'Geist Mono', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --fs-eyebrow: 11px;
+  --fs-meta:    13px;
+  --fs-body:    15px;
+  --fs-h3:      22px;
+  --fs-h2:      34px;
+  --fs-h1:      54px;
+  --fs-display: clamp(64px, 9vw, 128px);
+
+  /* Space */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Radius */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   22px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease-ui:  cubic-bezier(.2, .7, .2, 1);
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-slow: 480ms;
+
+  /* Layout */
+  --sidebar-w:          280px;
+  --sidebar-w-collapsed: 72px;
+  --bottombar-h:        64px;
+}
+
+/* ---------- Light theme (default) ---------- */
+:root,
+[data-theme="light"] {
+  --surface-0:    #fff6ec;
+  --surface-1:    rgba(255, 248, 235, 0.72);
+  --surface-2:    rgba(255, 255, 255, 0.55);
+  --surface-edge: rgba(255, 255, 255, 0.55);
+  --surface-glass: rgba(255, 248, 235, 0.16);
+
+  --ink:       #1c1410;
+  --ink-soft:  #4a382f;
+  --ink-mute:  #8a7868;
+  --ink-faint: #c9b9a8;
+
+  --accent:      #ff3d2e;
+  --accent-soft: #ff7a59;
+  --accent-glow: rgba(255, 61, 46, 0.35);
+
+  --status-good: #2faa6a;
+  --status-warn: #e8a02e;
+  --status-bad:  #ff3d2e;
+
+  /* Gradient field */
+  --grad-1: #ffb070;
+  --grad-2: #ff7a59;
+  --grad-3: #ffd6cf;
+  --grad-4: #fff0d2;
+  --grad-5: #ffa07a;
+
+  /* Shadows */
+  --shadow-1: 0 1px 2px rgba(28, 20, 16, 0.06),
+              0 4px 12px rgba(28, 20, 16, 0.04);
+  --shadow-2: 0 4px 16px rgba(28, 20, 16, 0.08),
+              0 16px 48px rgba(28, 20, 16, 0.06);
+  --shadow-glass: 0 14px 40px -16px rgba(60, 20, 0, 0.32),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  /* Inverted surface (used by playbar etc.) */
+  --invert-bg: rgba(28, 20, 16, 0.85);
+  --invert-fg: #ffffff;
+
+  color-scheme: light;
+}
+
+/* ---------- Dark theme ---------- */
+[data-theme="dark"] {
+  --surface-0:    #15100d;
+  --surface-1:    rgba(36, 26, 22, 0.72);
+  --surface-2:    rgba(48, 34, 28, 0.55);
+  --surface-edge: rgba(255, 200, 170, 0.10);
+  --surface-glass: rgba(36, 26, 22, 0.42);
+
+  --ink:       #f6ece2;
+  --ink-soft:  #e0cdbd;
+  --ink-mute:  #a89684;
+  --ink-faint: #6b5a4c;
+
+  --accent:      #ff6a55;
+  --accent-soft: #ff9077;
+  --accent-glow: rgba(255, 106, 85, 0.45);
+
+  --status-good: #4dd093;
+  --status-warn: #ffba5a;
+  --status-bad:  #ff6a55;
+
+  --grad-1: #6b3a25;
+  --grad-2: #8a3a2a;
+  --grad-3: #4a2218;
+  --grad-4: #15100d;
+  --grad-5: #8a4030;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45),
+              0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 4px 18px rgba(0, 0, 0, 0.5),
+              0 18px 56px rgba(0, 0, 0, 0.4);
+  --shadow-glass: 0 14px 40px -16px rgba(0, 0, 0, 0.7),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  --invert-bg: rgba(246, 236, 226, 0.9);
+  --invert-fg: #15100d;
+
+  color-scheme: dark;
+}
