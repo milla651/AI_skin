@@ -1,34 +1,57 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{% block title %}Lumen · Aurora{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+
+  {# --- Anti-FOUC: resolve theme before any CSS loads --- #}
+  <script>
+    (function () {
+      try {
+        var m = localStorage.getItem("lumen.theme");
+        if (m !== "light" && m !== "dark" && m !== "system") m = "system";
+        var r = m === "system"
+          ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : m;
+        document.documentElement.setAttribute("data-theme", r);
+        document.documentElement.setAttribute("data-theme-mode", m);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
+
+  {# --- Design system: tokens → base → components → page --- #}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tokens.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/button.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/card.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/badge.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/sidebar.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/gauge.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/skeleton.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components/toast.css') }}" />
+  {% block page_css %}{% endblock %}
+
   {% block head_extra %}{% endblock %}
 </head>
 <body>
   <div class="aurora" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <a class="brand" href="{{ url_for('pages.index') }}">
-      <span class="brand-mark"></span>
-      Lumen<em>.</em>
-      <span class="brand-tag">vol · i</span>
-    </a>
-    <nav class="site-nav">
-      <a href="{{ url_for('pages.index') }}">Read</a>
-      <a href="{{ url_for('pages.history') }}">Atlas</a>
-      <a href="#field-notes">Field notes</a>
-    </nav>
-  </header>
+  <div class="app-shell">
+    {% include "_sidebar.html" %}
 
-  {% block content %}{% endblock %}
+    <div class="app-main">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
 
-  <footer class="site-footer">
-    <span>Lumen · local · open models</span>
-    <span><span class="dot">●</span> reading on this machine only</span>
-  </footer>
+  {# Toast region (populated by lib/toast.js if/when present) #}
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+  {# --- Shared scripts --- #}
+  <script src="{{ url_for('static', filename='js/lib/theme.js') }}" defer></script>
 
   {% block scripts %}{% endblock %}
 </body>
