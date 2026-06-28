@@ -1,0 +1,164 @@
+/* ======================================================================
+   LUMEN · History / Atlas page
+   ====================================================================== */
+
+.atlas {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-6) var(--space-6) 110px;
+}
+
+.atlas-head {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+.atlas-title {
+  font-family: var(--font-serif);
+  font-size: clamp(56px, 8vw, 120px);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.atlas-title em { color: var(--accent); }
+
+/* ---------- Trend chart card (Phase 2) ---------- */
+.atlas-trend {
+  max-width: 980px;
+  margin: 0 auto var(--space-6);
+  padding: var(--space-5);
+  background: var(--surface-1);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+}
+.atlas-trend-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.atlas-trend-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.atlas-trend-range {
+  display: inline-flex;
+  gap: var(--space-1);
+}
+.atlas-trend-range button {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  color: var(--ink-soft);
+  border: 1px solid transparent;
+  transition: background var(--dur-fast) var(--ease-ui),
+              color var(--dur-fast) var(--ease-ui),
+              border-color var(--dur-fast) var(--ease-ui);
+}
+.atlas-trend-range button:hover { color: var(--ink); }
+.atlas-trend-range button.is-active {
+  color: var(--ink);
+  border-color: var(--surface-edge);
+  background: var(--surface-2);
+}
+.atlas-trend-canvas {
+  position: relative;
+  height: 280px;
+  width: 100%;
+}
+.atlas-trend-empty {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: var(--space-7) var(--space-4);
+}
+
+/* ---------- Atlas grid ---------- */
+.atlas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.atlas-card {
+  background: var(--surface-1);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: transform var(--dur-base) var(--ease-ui),
+              box-shadow var(--dur-base) var(--ease-ui);
+  box-shadow: var(--shadow-1);
+}
+.atlas-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
+}
+.atlas-card a { display: block; }
+.atlas-card .id {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.atlas-card .num {
+  font-family: var(--font-serif);
+  font-size: 64px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin: var(--space-4) 0 var(--space-2);
+  color: var(--ink);
+}
+.atlas-card .num small {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  vertical-align: super;
+  color: var(--ink-soft);
+}
+.atlas-card .meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+.atlas-card .meta .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ink-mute);
+}
+.atlas-card .meta .dot.done    { background: var(--status-good); }
+.atlas-card .meta .dot.running { background: var(--status-warn); }
+.atlas-card .meta .dot.error   { background: var(--status-bad); }
+.atlas-card .meta .when {
+  margin-left: auto;
+  text-transform: none;
+  letter-spacing: 0.06em;
+}
+.atlas-empty {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 28px;
+  color: var(--ink-soft);
+  padding: var(--space-8) var(--space-4);
+}
+.atlas-empty a { color: var(--accent); }
