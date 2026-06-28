@@ -1,12 +1,33 @@
 {% extends "base.html" %}
 {% block title %}Lumen · Atlas{% endblock %}
 
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/history.css') }}" />
+{% endblock %}
+
 {% block content %}
 <main class="atlas">
   <header class="atlas-head">
     <p class="eyebrow" style="margin-bottom:14px;">Atlas · every reading</p>
     <h1 class="atlas-title">A quiet archive,<br /><em>kept softly.</em></h1>
   </header>
+
+  {# Trend chart placeholder — wired in Phase 2 #}
+  {% if items and items|length > 1 %}
+  <section class="atlas-trend" id="atlas-trend" aria-label="Score trend">
+    <div class="atlas-trend-head">
+      <span class="atlas-trend-title">Score · last 30 days</span>
+      <div class="atlas-trend-range" role="tablist" aria-label="Time range">
+        <button type="button" data-range="7">7d</button>
+        <button type="button" data-range="30" class="is-active">30d</button>
+        <button type="button" data-range="90">90d</button>
+      </div>
+    </div>
+    <div class="atlas-trend-canvas">
+      <div class="atlas-trend-empty">Trend chart arrives in Phase 2.</div>
+    </div>
+  </section>
+  {% endif %}
 
   {% if items %}
   <ul class="atlas-grid">
@@ -22,11 +43,9 @@
           {% endif %}
         </div>
         <div class="meta">
-          <span class="dot {{ a.status }}" style="width:8px;height:8px;border-radius:50%;background:#ff3d2e;"></span>
+          <span class="dot {{ a.status }}"></span>
           <span>{{ a.status }}</span>
-          <span style="margin-left:auto;text-transform:none;letter-spacing:.06em;">
-            {{ a.created_at.strftime('%b %d · %H:%M') }}
-          </span>
+          <span class="when">{{ a.created_at.strftime('%b %d · %H:%M') }}</span>
         </div>
       </a>
     </li>
@@ -34,7 +53,7 @@
   </ul>
   {% else %}
   <p class="atlas-empty">
-    No readings yet. <a href="{{ url_for('pages.index') }}" style="color:var(--accent);">take your first</a>.
+    No readings yet. <a href="{{ url_for('pages.index') }}">take your first</a>.
   </p>
   {% endif %}
 </main>
