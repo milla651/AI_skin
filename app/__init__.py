@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import os
+import uuid
+from datetime import datetime, timedelta
 from pathlib import Path
 
-from flask import Flask
+from flask import Flask, g, request
 from sqlalchemy import text
 
 from .config import Config
@@ -26,6 +28,34 @@ def create_app(config_class: type[Config] = Config) -> Flask:
     # Ensure the dedicated schema exists before models/migrations touch it
     with app.app_context():
         _ensure_schema(app.config["DB_SCHEMA"])
+
+    # ------------------------------------------------------------------
+    # Device-ID middleware (§8.4 of IMPLEMENTATION.md)
+    # ------------------------------------------------------------------
+    @app.before_request
+    def _ensure_device_id():
+        did = request.cookies.get("lumen.did")
+        if not did:
+            did = str(uuid.uuid4())
+        g.device_id = did
+        # tz offset sent by lib/device.js; default 0 (UTC)
+        try:
+            g.tz_offset = int(request.cookies.get("lumen.tzoff", "0"))
+        except (ValueError, TypeError):
+            g.tz_offset = 0
+
+    @app.after_request
+    def _set_device_cookie(resp):
+        did = g.get("device_id")
+        if did and request.cookies.get("lumen.did") != did:
+            resp.set_cookie(
+                "lumen.did",
+                did,
+                max_age=60 * 60 * 24 * 365,
+                httponly=True,
+                samesite="Lax",
+            )
+        return resp
 
     # Register blueprints
     from .routes.pages import pages_bp
