@@ -1,0 +1,158 @@
+{
+  "redness": {
+    "good": {
+      "short": "Even, calm tone — keep your barrier happy.",
+      "long": [
+        "Stick with a gentle, fragrance-free cleanser.",
+        "Daily broad-spectrum SPF 30+ prevents reactive flushing.",
+        "Avoid hot water and harsh scrubs."
+      ]
+    },
+    "warn": {
+      "short": "Mild flush. Cool it down with calming actives.",
+      "long": [
+        "Look for centella asiatica (cica) or panthenol serums.",
+        "Add azelaic acid 10% a few nights a week for redness control.",
+        "Identify triggers — spicy food, alcohol, very hot showers."
+      ]
+    },
+    "bad": {
+      "short": "High redness — focus on barrier repair, not exfoliation.",
+      "long": [
+        "Pause retinoids, AHAs/BHAs until skin calms.",
+        "Layer a ceramide + cholesterol + fatty-acid moisturiser.",
+        "If persistent, consider a derm visit for rosacea screening."
+      ]
+    }
+  },
+  "pigmentation": {
+    "good": {
+      "short": "Even tone — keep protecting it from UV.",
+      "long": [
+        "Reapply SPF every 2–3 hours of outdoor exposure.",
+        "A topical vitamin C in the morning keeps tone bright.",
+        "Wide-brim hats are underrated."
+      ]
+    },
+    "warn": {
+      "short": "Patchy tone forming. Brightening + protection.",
+      "long": [
+        "Niacinamide 5% morning and night fades mild spots over weeks.",
+        "Tranexamic acid serum or azelaic acid help post-inflammatory marks.",
+        "Religious SPF is non-negotiable — pigment darkens fast in the sun."
+      ]
+    },
+    "bad": {
+      "short": "Heavy pigmentation — combine in-clinic + at-home.",
+      "long": [
+        "Discuss prescription tretinoin or hydroquinone with a dermatologist.",
+        "Chemical peels (mandelic, glycolic) over weeks help fade depth.",
+        "Continue daily SPF and avoid picking spots — friction worsens it."
+      ]
+    }
+  },
+  "wrinkles": {
+    "good": {
+      "short": "Smooth surface — invest in prevention.",
+      "long": [
+        "Antioxidants (vitamin C, E) by day, retinol at night.",
+        "Adequate sleep and hydration show on the face.",
+        "Don't forget the neck and back of the hands."
+      ]
+    },
+    "warn": {
+      "short": "Early fine lines. Time to layer in retinoids.",
+      "long": [
+        "Start a low-strength retinol 2–3 nights/week.",
+        "Peptide creams support collagen synthesis.",
+        "Hyaluronic acid plumps the surface temporarily — pair with occlusion."
+      ]
+    },
+    "bad": {
+      "short": "Deeper lines — combine actives + professional options.",
+      "long": [
+        "Prescription tretinoin is the gold standard for fine lines.",
+        "In-office: microneedling, radiofrequency, or laser resurfacing.",
+        "Daily SPF cuts further photoaging dramatically."
+      ]
+    }
+  },
+  "pores": {
+    "good": {
+      "short": "Small, smooth pores. Maintain with regular cleansing.",
+      "long": [
+        "Stick with a non-comedogenic moisturiser.",
+        "Niacinamide keeps pores looking refined.",
+        "Don't squeeze — it stretches the opening."
+      ]
+    },
+    "warn": {
+      "short": "Visible pores in oilier zones. BHA helps.",
+      "long": [
+        "Salicylic acid (BHA) 2% twice a week clears congestion.",
+        "Use a clay mask weekly on the T-zone.",
+        "Niacinamide + zinc serum balances oil production."
+      ]
+    },
+    "bad": {
+      "short": "Enlarged pores — retinoids + clinic options.",
+      "long": [
+        "Topical retinoids reduce apparent pore size over months.",
+        "Consider in-office RF microneedling for tightening.",
+        "Daily SPF prevents collagen loss around pores."
+      ]
+    }
+  },
+  "dark_circles": {
+    "good": {
+      "short": "Bright under-eye — keep it that way.",
+      "long": [
+        "Use a dedicated eye cream with peptides.",
+        "Sleep on your back to reduce morning puffiness.",
+        "SPF around the eye area matters too."
+      ]
+    },
+    "warn": {
+      "short": "Mild shadowing. Brightening + circulation help.",
+      "long": [
+        "Caffeine eye creams reduce vascular darkness.",
+        "Vitamin K and niacinamide brighten over weeks.",
+        "Cold compress in the morning shrinks puffiness fast."
+      ]
+    },
+    "bad": {
+      "short": "Pronounced darkness — investigate the cause.",
+      "long": [
+        "Check iron levels and sleep quality with a doctor.",
+        "Hyperpigmented circles respond to azelaic acid or kojic acid.",
+        "Tear-trough fillers can mask anatomical shadowing."
+      ]
+    }
+  },
+  "acne": {
+    "good": {
+      "short": "Clear skin — keep the routine simple.",
+      "long": [
+        "Don't overload with actives — less is more here.",
+        "Clean pillowcases weekly cut bacterial load.",
+        "Change masks/headbands often during workouts."
+      ]
+    },
+    "warn": {
+      "short": "Occasional breakouts. Targeted treatment.",
+      "long": [
+        "Spot-treat with benzoyl peroxide 2.5% overnight.",
+        "Salicylic acid 2% as a leave-on every other day.",
+        "Avoid heavy occlusive creams on oily zones."
+      ]
+    },
+    "bad": {
+      "short": "Active acne — escalate, don't pick.",
+      "long": [
+        "Book a dermatologist — topical/oral retinoids may be warranted.",
+        "Adapalene 0.1% over-the-counter is a solid starting point.",
+        "Track triggers (dairy, high-glycemic food) for 6 weeks."
+      ]
+    }
+  }
+}
