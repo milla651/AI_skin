@@ -1,0 +1,96 @@
+/* ======================================================================
+   LUMEN · Card surfaces
+   ====================================================================== */
+
+.card-surface {
+  background: var(--surface-1);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  padding: var(--space-5);
+  color: var(--ink);
+  transition: transform var(--dur-base) var(--ease-ui),
+              box-shadow var(--dur-base) var(--ease-ui);
+}
+.card-surface:hover {
+  box-shadow: var(--shadow-2);
+}
+
+/* Legacy floating orbit card — kept for the capture hero */
+.card {
+  position: absolute;
+  padding: 14px 18px;
+  min-width: 168px;
+  background: var(--surface-glass);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  box-shadow: var(--shadow-glass);
+  pointer-events: auto;
+  cursor: default;
+  transition: transform var(--dur-base) var(--ease-ui),
+              box-shadow var(--dur-base) var(--ease-ui);
+  animation: card-in 1s both var(--ease-ui),
+             card-float 8s ease-in-out infinite;
+}
+.card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 22px 50px -18px rgba(60, 20, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.card .num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--ink-soft);
+}
+.card .name {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1;
+  margin: 6px 0 8px;
+}
+.card .val {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+.card .val b { font-weight: 600; color: var(--ink); }
+.card .bar {
+  margin-top: 10px;
+  height: 3px;
+  background: rgba(28, 20, 16, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+[data-theme="dark"] .card .bar {
+  background: rgba(255, 255, 255, 0.12);
+}
+.card .bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  border-radius: inherit;
+  transition: width 1.2s var(--ease-ui);
+}
+
+/* Card positions for the hero */
+.card.tl { top: 18%; left: 6%;    animation-delay: .6s, 0s; }
+.card.bl { bottom: 22%; left: 10%; animation-delay: .75s, .4s; }
+.card.tr { top: 16%; right: 6%;   animation-delay: .9s, .8s; }
+.card.br { bottom: 24%; right: 9%; animation-delay: 1.05s, 1.2s; }
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(40px) scale(.96) rotate(-2deg); }
+  to   { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+@keyframes card-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
