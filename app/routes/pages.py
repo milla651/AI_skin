@@ -49,3 +49,15 @@ def history():
         active_nav="atlas",
         **_sidebar_context(),
     )
+
+
+@pages_bp.route("/compare")
+@pages_bp.route("/compare/<uuid:a>/<uuid:b>")
+def compare(a=None, b=None):
+    return render_template(
+        "compare.html",
+        active_nav="compare",
+        a_id=str(a) if a else None,
+        b_id=str(b) if b else None,
+        **_sidebar_context(),
+    )
