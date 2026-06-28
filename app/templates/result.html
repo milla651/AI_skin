@@ -1,72 +1,77 @@
 {% extends "base.html" %}
 {% block title %}Lumen · Reading #{{ analysis.id|string|truncate(8, True, '') }}{% endblock %}
 
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/result.css') }}" />
+{% endblock %}
+
 {% block content %}
 <main class="report" data-analysis-id="{{ analysis.id }}">
   <p class="report-meta">
-    <span id="r-status-dot" class="dot pending"></span>
+    <span id="r-status-dot" class="dot {{ analysis.status }}"></span>
     <span>READING · {{ analysis.id|string|truncate(8, True, '') }}</span>
-    <span>·</span>
-    <span id="r-status-text">queued</span>
+    <span aria-hidden="true">·</span>
+    <span id="r-status-text">{{ analysis.status }}</span>
   </p>
 
-  <h1 class="score-hero">
-    <span id="r-score">—</span><span class="slash">/</span><small id="r-score-100">100</small>
+  <h1 class="score-hero" aria-label="Overall skin score">
+    <span id="r-score">
+      {% if analysis.result and analysis.result.overall_score is not none %}{{ analysis.result.overall_score }}{% else %}—{% endif %}
+    </span><span class="slash">/</span><small id="r-score-100">100</small>
   </h1>
 
-  <p class="skintype">Skin type · <b id="r-skintype">—</b></p>
+  {# Skin-type badge (rendered by lib/skin_type.js once result is ready) #}
+  <div id="r-skintype-host">
+    {% if analysis.result and analysis.result.skin_type %}
+      <span class="skin-type" aria-expanded="false">
+        <button type="button" class="skin-type-trigger">
+          Skin · <b>{{ analysis.result.skin_type|capitalize }}</b>
+        </button>
+      </span>
+    {% endif %}
+  </div>
 
   <div class="r-portrait portrait-wrap">
     <img id="r-image" alt="Your portrait" />
   </div>
 
-  <!-- orbiting glass cards, but bound to live metrics -->
-  <div class="orbit" aria-hidden="true">
-    <article class="card tl" data-metric="redness">
-      <div class="num">01 · REDNESS</div>
-      <div class="name">Flush &amp; flare</div>
-      <div class="val"><b data-val>—</b> · index</div>
-      <div class="bar"><i data-bar style="width:0%"></i></div>
-    </article>
-    <article class="card bl" data-metric="pigmentation">
-      <div class="num">02 · PIGMENTATION</div>
-      <div class="name">Spotted tone</div>
-      <div class="val"><b data-val>—</b> · index</div>
-      <div class="bar"><i data-bar style="width:0%"></i></div>
-    </article>
-    <article class="card tr" data-metric="pores">
-      <div class="num">03 · PORES</div>
-      <div class="name">Open count</div>
-      <div class="val"><b data-val>—</b>% · cheek</div>
-      <div class="bar"><i data-bar style="width:0%"></i></div>
-    </article>
-    <article class="card br" data-metric="wrinkles">
-      <div class="num">04 · WRINKLES</div>
-      <div class="name">Fine lines</div>
-      <div class="val"><b data-val>—</b> · index</div>
-      <div class="bar"><i data-bar style="width:0%"></i></div>
-    </article>
-  </div>
+  {# Gauge grid — rendered by lib/gauge.js. Server-side fallback list is
+     included for no-JS users and screen-readers, then hidden when JS runs. #}
+  <section class="gauge-grid" id="r-gauges" aria-label="Skin metrics">
+    {% if analysis.result and analysis.result.metrics %}
+      {% for key, value in analysis.result.metrics.items() %}
+        <article class="gauge" data-metric="{{ key }}">
+          <div class="gauge-label">{{ key|replace('_', ' ')|upper }}</div>
+          <div class="gauge-name">{{ value }} / 100</div>
+        </article>
+      {% endfor %}
+    {% else %}
+      {% for key in ['redness','pigmentation','wrinkles','pores','dark_circles','acne'] %}
+        <article class="gauge" data-metric="{{ key }}">
+          <div class="gauge-label">{{ key|replace('_', ' ')|upper }}</div>
+          <div class="gauge-name">—</div>
+        </article>
+      {% endfor %}
+    {% endif %}
+  </section>
 
-  <section class="recs" id="r-recs" hidden>
+  <section class="recs" id="r-recs" {% if not (analysis.result and analysis.result.recommendations) %}hidden{% endif %}>
     <h3>Field notes</h3>
-    <ul id="r-rec-list"></ul>
+    <ul id="r-rec-list">
+      {% if analysis.result and analysis.result.recommendations %}
+        {% for rec in analysis.result.recommendations %}<li>{{ rec }}</li>{% endfor %}
+      {% endif %}
+    </ul>
   </section>
 </main>
-
-<!-- playbar for visual continuity -->
-<div class="playbar">
-  <a class="play" href="{{ url_for('pages.index') }}" aria-label="New reading">
-    <svg viewBox="0 0 14 14"><polygon points="2,1 13,7 2,13" fill="currentColor"/></svg>
-  </a>
-  <div class="rail"><i></i></div>
-  <div class="ts" id="r-ts">—</div>
-</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
   window.__ANALYSIS_ID__ = "{{ analysis.id }}";
 </script>
+<script src="{{ url_for('static', filename='js/lib/tips.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/lib/gauge.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/lib/skin_type.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/result.js') }}" defer></script>
 {% endblock %}
