@@ -52,12 +52,10 @@
       <span class="sb-link-text">Atlas</span>
     </a>
 
-    {# Compare is mentioned in spec §5.2 but the route lands in Phase 2.
-       We link to history for now so the rail is consistent.            #}
     <a class="sb-link {% if nav == 'compare' %}is-active{% endif %}"
-       href="{{ url_for('pages.history') }}#compare"
+       href="{{ url_for('pages.compare') }}"
        aria-label="Compare two readings"
-       title="Coming in phase 2">
+       {% if nav == 'compare' %}aria-current="page"{% endif %}>
       <span class="sb-ico" aria-hidden="true">
         <svg viewBox="0 0 24 24">
           <path d="M8 4v16"/>
