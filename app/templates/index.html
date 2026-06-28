@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Lumen · Read your skin, softly.{% endblock %}
 
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/capture.css') }}" />
+{% endblock %}
+
 {% block content %}
 <main class="hero">
   <p class="eyebrow">Lumen · Vol. I · A quiet portrait</p>
