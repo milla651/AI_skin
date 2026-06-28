@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Lumen · Compare{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/compare.css') }}" />
+{% endblock %}
+
+{% block content %}
+<main class="compare" data-a="{{ a_id or '' }}" data-b="{{ b_id or '' }}">
+  <header class="compare-head">
+    <p class="eyebrow">Compare · two readings</p>
+    <h1 class="compare-title">Before <em>&amp;</em> after</h1>
+  </header>
+
+  {# Loading / empty state #}
+  <div class="compare-loading" id="compare-loading">
+    <p class="compare-loading-text">Loading readings…</p>
+  </div>
+  <div class="compare-empty" id="compare-empty" hidden>
+    <p>Need at least 2 readings to compare.<br />
+    <a href="{{ url_for('pages.index') }}">Take a scan →</a></p>
+  </div>
+
+  {# Main compare content — hidden until data loads #}
+  <section class="compare-body" id="compare-body" hidden>
+
+    {# Overall score diff #}
+    <div class="compare-score-diff" id="compare-score-diff"></div>
+
+    {# Side-by-side portraits with slider #}
+    <div class="compare-portraits" id="compare-portraits">
+      <div class="compare-portrait compare-portrait-a">
+        <div class="compare-portrait-label">Latest</div>
+        <img id="compare-img-a" alt="Reading A" />
+      </div>
+      <div class="compare-slider" id="compare-slider">
+        <div class="compare-slider-handle" tabindex="0" role="slider"
+             aria-label="Compare slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          ⟷
+        </div>
+      </div>
+      <div class="compare-portrait compare-portrait-b">
+        <div class="compare-portrait-label">Previous</div>
+        <img id="compare-img-b" alt="Reading B" />
+      </div>
+    </div>
+
+    {# Per-metric delta table #}
+    <div class="compare-deltas card-surface">
+      <h3 class="compare-deltas-title">Metric changes</h3>
+      <table class="compare-table" id="compare-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Latest</th>
+            <th>Previous</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody id="compare-tbody"></tbody>
+      </table>
+    </div>
+
+    {# Meta row #}
+    <div class="compare-meta" id="compare-meta"></div>
+  </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/pages/compare.js') }}" defer></script>
+{% endblock %}
