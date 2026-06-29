@@ -1,8 +1,10 @@
-/* Lumen :: result poller (Phase 1)
+/* Lumen :: result poller (Phase 1–3)
    Polls /api/result/<id> until done, then:
      - hydrates score & skin-type badge
      - renders 6 radial gauges with severity colours + per-metric tips
      - fills in recommendations
+     - inits annotated overlay tabs (Phase 3)
+     - wires PDF export button (Phase 3)
 */
 (() => {
   const id = window.__ANALYSIS_ID__;
@@ -16,7 +18,6 @@
     error:   "trouble",
   };
 
-  // Six metrics from the backend, ordered the way they appear in the grid.
   const METRICS = [
     { key: "redness",      label: "01 · REDNESS",      name: "Flush & flare" },
     { key: "pigmentation", label: "02 · PIGMENTATION", name: "Spotted tone" },
@@ -26,15 +27,22 @@
     { key: "acne",         label: "06 · ACNE",         name: "Breakouts" },
   ];
 
+  const METRIC_LABELS = {
+    redness: "Redness", pigmentation: "Pigmentation", wrinkles: "Wrinkles",
+    pores: "Pores", dark_circles: "Dark Circles", acne: "Acne",
+  };
+
   const els = {
-    img:        document.getElementById("r-image"),
-    statusDot:  document.getElementById("r-status-dot"),
-    statusText: document.getElementById("r-status-text"),
-    score:      document.getElementById("r-score"),
-    skintype:   document.getElementById("r-skintype-host"),
-    recs:       document.getElementById("r-recs"),
-    recList:    document.getElementById("r-rec-list"),
-    gauges:     document.getElementById("r-gauges"),
+    img:          document.getElementById("r-image"),
+    portraitWrap: document.getElementById("r-portrait-wrap"),
+    statusDot:    document.getElementById("r-status-dot"),
+    statusText:   document.getElementById("r-status-text"),
+    score:        document.getElementById("r-score"),
+    skintype:     document.getElementById("r-skintype-host"),
+    recs:         document.getElementById("r-recs"),
+    recList:      document.getElementById("r-rec-list"),
+    gauges:       document.getElementById("r-gauges"),
+    pdfBtn:       document.getElementById("r-pdf-btn"),
   };
 
   let rendered = false;
@@ -58,11 +66,9 @@
   }
 
   async function render(data) {
-    // status pill
     if (els.statusDot) els.statusDot.className = `dot ${data.status}`;
     if (els.statusText) els.statusText.textContent = STATUS_TEXT[data.status] || data.status;
 
-    // portrait
     if (data.image_path_url && els.img && els.img.src !== data.image_path_url) {
       els.img.src = data.image_path_url;
     }
@@ -71,18 +77,18 @@
       rendered = true;
       const r = data.result;
 
-      // score
+      // Score
       if (els.score) {
         const from = parseInt(els.score.textContent, 10) || 0;
         animateNumber(els.score, from, Number(r.overall_score) || 0, 1100);
       }
 
-      // skin type
+      // Skin type
       if (els.skintype && window.LumenSkinType) {
         window.LumenSkinType.renderSkinTypeBadge(els.skintype, r);
       }
 
-      // gauges — wipe SSR placeholders and re-render with real values + tips
+      // Gauges
       if (els.gauges && window.LumenGauge) {
         els.gauges.innerHTML = "";
         for (const m of METRICS) {
@@ -98,7 +104,7 @@
         }
       }
 
-      // recommendations
+      // Recommendations
       if (r.recommendations?.length && els.recs && els.recList) {
         els.recs.hidden = false;
         els.recList.innerHTML = "";
@@ -108,6 +114,23 @@
           els.recList.appendChild(li);
         });
       }
+
+      // ---- Phase 3: Overlay ----
+      if (r.regions && els.portraitWrap && els.img && window.LumenOverlay) {
+        window.LumenOverlay.initOverlay(els.portraitWrap, els.img, r.regions);
+      }
+
+      // ---- Phase 3: PDF export ----
+      if (els.pdfBtn) {
+        els.pdfBtn.hidden = false;
+        populatePdfTemplate(r, data);
+        els.pdfBtn.addEventListener("click", () => {
+          if (window.LumenPDF) {
+            window.LumenPDF.exportPDF(id);
+          }
+        });
+      }
+
     } else if (data.status === "error") {
       if (els.score) els.score.textContent = "ERR";
       if (els.skintype) {
@@ -115,6 +138,50 @@
           (data.error || "something went wrong").slice(0, 80)
         }</span>`;
       }
+    }
+  }
+
+  function populatePdfTemplate(r, data) {
+    const scoreEl = document.getElementById("pdf-score");
+    const dateEl = document.getElementById("pdf-date");
+    const typeEl = document.getElementById("pdf-skintype");
+    const metricsEl = document.getElementById("pdf-metrics");
+    const recsEl = document.getElementById("pdf-recs");
+    const idEl = document.getElementById("pdf-id");
+
+    if (scoreEl) scoreEl.textContent = r.overall_score ?? "—";
+    if (dateEl) {
+      const d = data.created_at ? new Date(data.created_at) : new Date();
+      dateEl.textContent = d.toLocaleDateString(undefined, {
+        year: "numeric", month: "long", day: "numeric",
+      });
+    }
+    if (typeEl) {
+      typeEl.innerHTML = `Skin type · <b>${(r.skin_type || "unknown").toUpperCase()}</b>`;
+    }
+    if (metricsEl && r.metrics) {
+      metricsEl.innerHTML = "";
+      for (const [key, val] of Object.entries(r.metrics)) {
+        const label = METRIC_LABELS[key] || key.replace(/_/g, " ");
+        metricsEl.innerHTML += `
+          <div class="pdf-metric">
+            <div class="pdf-metric-label">${label}</div>
+            <div class="pdf-metric-value">${val}</div>
+            <div class="pdf-metric-unit">/ 100</div>
+          </div>
+        `;
+      }
+    }
+    if (recsEl && r.recommendations) {
+      recsEl.innerHTML = "";
+      r.recommendations.forEach((rec) => {
+        const li = document.createElement("li");
+        li.textContent = rec;
+        recsEl.appendChild(li);
+      });
+    }
+    if (idEl) {
+      idEl.textContent = `Reading #${(id || "").slice(0, 8)}`;
     }
   }
 
