@@ -1,0 +1,60 @@
+{
+  "oily": {
+    "am": [
+      {"step": "Cleanser", "detail": "Gel or foaming cleanser with salicylic acid", "ingredient": "Salicylic acid 0.5–2%"},
+      {"step": "Toner", "detail": "Alcohol-free toner with niacinamide", "ingredient": "Niacinamide 5%"},
+      {"step": "Serum", "detail": "Lightweight vitamin C serum", "ingredient": "L-ascorbic acid 10–15%"},
+      {"step": "Moisturiser", "detail": "Oil-free gel moisturiser", "ingredient": "Hyaluronic acid, aloe"},
+      {"step": "SPF", "detail": "Matte-finish broad-spectrum SPF 30+", "ingredient": "Zinc oxide or chemical filters"}
+    ],
+    "pm": [
+      {"step": "Cleanser", "detail": "Oil cleanser first, then gel cleanser (double cleanse)", "ingredient": "Micellar oil + salicylic acid"},
+      {"step": "Exfoliant", "detail": "BHA 2% every other night", "ingredient": "Salicylic acid 2%"},
+      {"step": "Serum", "detail": "Niacinamide + zinc serum", "ingredient": "Niacinamide 10%, zinc PCA 1%"},
+      {"step": "Moisturiser", "detail": "Lightweight gel or water cream", "ingredient": "Centella, squalane"}
+    ]
+  },
+  "dry": {
+    "am": [
+      {"step": "Cleanser", "detail": "Cream or milk cleanser, no foam", "ingredient": "Ceramides, glycerin"},
+      {"step": "Toner", "detail": "Hydrating essence or toner", "ingredient": "Hyaluronic acid, panthenol"},
+      {"step": "Serum", "detail": "Vitamin C in an oil base", "ingredient": "Ascorbyl glucoside 10%"},
+      {"step": "Moisturiser", "detail": "Rich cream with ceramides", "ingredient": "Ceramides, cholesterol, fatty acids"},
+      {"step": "SPF", "detail": "Moisturising sunscreen, cream texture", "ingredient": "Broad-spectrum SPF 30+"}
+    ],
+    "pm": [
+      {"step": "Cleanser", "detail": "Balm or oil cleanser", "ingredient": "Jojoba oil, vitamin E"},
+      {"step": "Serum", "detail": "Retinol in squalane (2–3 nights/week)", "ingredient": "Retinol 0.3–0.5%"},
+      {"step": "Moisturiser", "detail": "Overnight repair cream", "ingredient": "Shea butter, ceramides, peptides"},
+      {"step": "Oil", "detail": "Face oil as final occlusive step", "ingredient": "Rosehip or marula oil"}
+    ]
+  },
+  "combination": {
+    "am": [
+      {"step": "Cleanser", "detail": "Gentle gel cleanser", "ingredient": "Glycerin, panthenol"},
+      {"step": "Toner", "detail": "Balancing toner", "ingredient": "Niacinamide 3–5%"},
+      {"step": "Serum", "detail": "Vitamin C serum", "ingredient": "L-ascorbic acid 10%"},
+      {"step": "Moisturiser", "detail": "Lightweight lotion (heavier on cheeks)", "ingredient": "Hyaluronic acid, squalane"},
+      {"step": "SPF", "detail": "Broad-spectrum SPF 30+", "ingredient": "Zinc oxide or hybrid filters"}
+    ],
+    "pm": [
+      {"step": "Cleanser", "detail": "Micellar water + gentle gel", "ingredient": "Micellar + glycerin-based"},
+      {"step": "Exfoliant", "detail": "AHA/BHA combo 2 nights/week", "ingredient": "Glycolic 5% + salicylic 0.5%"},
+      {"step": "Serum", "detail": "Niacinamide serum", "ingredient": "Niacinamide 10%"},
+      {"step": "Moisturiser", "detail": "Medium-weight cream", "ingredient": "Ceramides, peptides"}
+    ]
+  },
+  "normal": {
+    "am": [
+      {"step": "Cleanser", "detail": "Any gentle cleanser you enjoy", "ingredient": "Glycerin, amino acids"},
+      {"step": "Serum", "detail": "Antioxidant serum", "ingredient": "Vitamin C + E + ferulic acid"},
+      {"step": "Moisturiser", "detail": "Light to medium moisturiser", "ingredient": "Hyaluronic acid, niacinamide"},
+      {"step": "SPF", "detail": "Broad-spectrum SPF 30+", "ingredient": "Any texture you'll reapply"}
+    ],
+    "pm": [
+      {"step": "Cleanser", "detail": "Gentle cleanser", "ingredient": "Non-stripping formula"},
+      {"step": "Serum", "detail": "Retinol 2–3 nights/week for prevention", "ingredient": "Retinol 0.25–0.5%"},
+      {"step": "Moisturiser", "detail": "Night cream with peptides", "ingredient": "Peptides, ceramides"}
+    ]
+  }
+}
