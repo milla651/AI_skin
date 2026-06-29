@@ -108,11 +108,22 @@ def _mock_result() -> dict:
         "acne": random.randint(0, 40),
     }
     overall = 100 - int(sum(metrics.values()) / len(metrics))
+
+    # Skin age: base 25, shifted by wrinkles/pigmentation/pores
+    base_age = 25
+    skin_age = base_age + int(
+        (metrics["wrinkles"] - 25) * 0.3
+        + (metrics["pigmentation"] - 30) * 0.15
+        + (metrics["pores"] - 35) * 0.1
+    )
+    skin_age = max(18, min(65, skin_age))
+
     return {
-        "version": "stub-0.3",
+        "version": "stub-0.4",
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "overall_score": overall,
         "skin_type": _derive_skin_type(metrics),
+        "skin_age": skin_age,
         "metrics": metrics,
         "regions": _mock_regions(),
         "recommendations": [
