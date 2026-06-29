@@ -20,7 +20,7 @@
     </span><span class="slash">/</span><small id="r-score-100">100</small>
   </h1>
 
-  {# Skin-type badge (rendered by lib/skin_type.js once result is ready) #}
+  {# Skin-type badge #}
   <div id="r-skintype-host">
     {% if analysis.result and analysis.result.skin_type %}
       <span class="skin-type" aria-expanded="false">
@@ -31,12 +31,23 @@
     {% endif %}
   </div>
 
-  <div class="r-portrait portrait-wrap">
+  {# Actions row: PDF export #}
+  <div class="report-actions" id="r-actions">
+    <button class="pdf-export-btn" id="r-pdf-btn" type="button" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3v12M12 15l-4-4M12 15l4-4"/>
+        <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/>
+      </svg>
+      Download report
+    </button>
+  </div>
+
+  {# Portrait with overlay tabs — tabs injected by lib/overlay.js #}
+  <div class="r-portrait portrait-wrap" id="r-portrait-wrap">
     <img id="r-image" alt="Your portrait" />
   </div>
 
-  {# Gauge grid — rendered by lib/gauge.js. Server-side fallback list is
-     included for no-JS users and screen-readers, then hidden when JS runs. #}
+  {# Gauge grid #}
   <section class="gauge-grid" id="r-gauges" aria-label="Skin metrics">
     {% if analysis.result and analysis.result.metrics %}
       {% for key, value in analysis.result.metrics.items() %}
@@ -64,14 +75,42 @@
     </ul>
   </section>
 </main>
+
+{# ===== Hidden PDF template (rasterised by lib/pdf.js) ===== #}
+<div id="pdf-template">
+  <div class="pdf-header">
+    <div class="pdf-brand"><span class="pdf-brand-dot"></span>Lumen</div>
+    <div class="pdf-date" id="pdf-date"></div>
+  </div>
+  <div class="pdf-score">
+    <div class="pdf-score-value" id="pdf-score">—</div>
+    <div class="pdf-score-label">Overall skin score</div>
+  </div>
+  <div class="pdf-skintype" id="pdf-skintype"></div>
+  <div class="pdf-metrics" id="pdf-metrics"></div>
+  <div class="pdf-tips">
+    <h3>Recommendations</h3>
+    <ul id="pdf-recs"></ul>
+  </div>
+  <div class="pdf-footer">
+    <span id="pdf-id"></span>
+    <span>lumen · vol. i</span>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
   window.__ANALYSIS_ID__ = "{{ analysis.id }}";
 </script>
+{# Phase 3 CDN deps (loaded only on result page) #}
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
 <script src="{{ url_for('static', filename='js/lib/tips.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/lib/gauge.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/lib/skin_type.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/lib/overlay.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/lib/pdf.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/result.js') }}" defer></script>
 {% endblock %}
