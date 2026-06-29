@@ -63,6 +63,40 @@ def _derive_skin_type(m: dict) -> str:
     return "normal"
 
 
+def _mock_regions() -> dict:
+    """Generate plausible face-region polygons for the overlay.
+
+    Polygons use normalised 0..1 coords so they scale to any image size.
+    We define fixed zones (cheek-L, cheek-R, forehead, nose, chin) and
+    randomly assign metrics to them with random intensities.
+    """
+    ZONES = {
+        "left_cheek":  [[0.15, 0.40], [0.35, 0.35], [0.38, 0.55], [0.30, 0.62], [0.12, 0.58]],
+        "right_cheek": [[0.65, 0.35], [0.85, 0.40], [0.88, 0.58], [0.70, 0.62], [0.62, 0.55]],
+        "forehead":    [[0.25, 0.10], [0.75, 0.10], [0.78, 0.28], [0.22, 0.28]],
+        "nose":        [[0.42, 0.35], [0.58, 0.35], [0.56, 0.58], [0.44, 0.58]],
+        "chin":        [[0.35, 0.70], [0.65, 0.70], [0.62, 0.85], [0.38, 0.85]],
+    }
+    METRIC_ZONES = {
+        "redness":      ["left_cheek", "right_cheek", "nose"],
+        "pores":        ["nose", "left_cheek", "right_cheek"],
+        "wrinkles":     ["forehead", "left_cheek", "right_cheek"],
+        "pigmentation": ["forehead", "left_cheek", "chin"],
+    }
+
+    regions = {}
+    for metric, zone_keys in METRIC_ZONES.items():
+        polys = []
+        for zk in zone_keys:
+            if random.random() > 0.35:  # not every zone fires every time
+                polys.append({
+                    "polygon": ZONES[zk],
+                    "intensity": round(random.uniform(0.3, 0.9), 2),
+                })
+        regions[metric] = polys
+    return regions
+
+
 def _mock_result() -> dict:
     """Random but believable-looking skin metrics so the UI is testable."""
     metrics = {
@@ -75,11 +109,12 @@ def _mock_result() -> dict:
     }
     overall = 100 - int(sum(metrics.values()) / len(metrics))
     return {
-        "version": "stub-0.2",
+        "version": "stub-0.3",
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "overall_score": overall,
         "skin_type": _derive_skin_type(metrics),
         "metrics": metrics,
+        "regions": _mock_regions(),
         "recommendations": [
             "Use a broad-spectrum SPF 30+ daily.",
             "Hydrate with a fragrance-free moisturizer.",
