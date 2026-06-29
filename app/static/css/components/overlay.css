@@ -1,0 +1,208 @@
+/* ======================================================================
+   LUMEN · Overlay tabs + canvas (§6.8)
+   ====================================================================== */
+
+.overlay-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.overlay-tab {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  color: var(--ink-soft);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-ui),
+              color var(--dur-fast) var(--ease-ui),
+              border-color var(--dur-fast) var(--ease-ui);
+}
+.overlay-tab:hover:not([disabled]) {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+.overlay-tab.is-active {
+  color: var(--ink);
+  background: var(--surface-2);
+  border-color: var(--surface-edge);
+}
+.overlay-tab[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.overlay-canvas {
+  border-radius: inherit;
+  mix-blend-mode: multiply;
+}
+[data-theme="dark"] .overlay-canvas {
+  mix-blend-mode: screen;
+}
+
+/* ---------- PDF export button ---------- */
+.pdf-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-edge);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-ui),
+              color var(--dur-fast) var(--ease-ui);
+}
+.pdf-export-btn:hover {
+  color: var(--ink);
+  background: var(--surface-1);
+}
+.pdf-export-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Hidden PDF template ---------- */
+#pdf-template {
+  display: none;
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  background: #fff6ec;
+  color: #1c1410;
+  padding: 40px;
+}
+#pdf-template .pdf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #c9b9a8;
+}
+#pdf-template .pdf-brand {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+}
+#pdf-template .pdf-brand-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #ff3d2e;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+#pdf-template .pdf-date {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a7868;
+}
+#pdf-template .pdf-score {
+  text-align: center;
+  margin: 24px 0;
+}
+#pdf-template .pdf-score-value {
+  font-family: 'Instrument Serif', serif;
+  font-size: 72px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+#pdf-template .pdf-score-label {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #8a7868;
+  margin-top: 4px;
+}
+#pdf-template .pdf-skintype {
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #4a382f;
+  margin-bottom: 24px;
+}
+#pdf-template .pdf-skintype b { color: #ff3d2e; }
+#pdf-template .pdf-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+#pdf-template .pdf-metric {
+  padding: 12px;
+  border: 1px solid #c9b9a8;
+  border-radius: 10px;
+  text-align: center;
+}
+#pdf-template .pdf-metric-label {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a7868;
+  margin-bottom: 6px;
+}
+#pdf-template .pdf-metric-value {
+  font-family: 'Instrument Serif', serif;
+  font-size: 32px;
+  line-height: 1;
+}
+#pdf-template .pdf-metric-unit {
+  font-size: 10px;
+  color: #8a7868;
+}
+#pdf-template .pdf-tips {
+  margin-top: 16px;
+}
+#pdf-template .pdf-tips h3 {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #8a7868;
+  margin-bottom: 10px;
+}
+#pdf-template .pdf-tips li {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: #1c1410;
+  padding-left: 16px;
+  margin-bottom: 6px;
+  position: relative;
+  list-style: none;
+}
+#pdf-template .pdf-tips li::before {
+  content: "\2014";
+  position: absolute;
+  left: 0;
+  color: #ff3d2e;
+}
+#pdf-template .pdf-footer {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #c9b9a8;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a7868;
+  display: flex;
+  justify-content: space-between;
+}
