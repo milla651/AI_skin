@@ -1,0 +1,215 @@
+/* ======================================================================
+   LUMEN · Share card (Phase 4)
+   ====================================================================== */
+
+/* Hidden share card template */
+#share-card {
+  display: none;
+  background: linear-gradient(135deg, #fff6ec 0%, #ffd6cf 50%, #ffb070 100%);
+  color: #1c1410;
+  padding: 48px;
+  text-align: center;
+  font-family: 'Geist Mono', 'JetBrains Mono', monospace;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+#share-card::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,61,46,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#share-card .share-brand {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+  color: #1c1410;
+}
+#share-card .share-brand-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #ff3d2e;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+#share-card .share-score {
+  font-family: 'Instrument Serif', serif;
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
+}
+#share-card .share-slash { color: #ff3d2e; font-style: italic; }
+#share-card .share-max {
+  font-family: 'Geist Mono', monospace;
+  font-size: 14px;
+  vertical-align: super;
+  letter-spacing: 0.1em;
+  color: #8a7868;
+}
+
+#share-card .share-skintype {
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #4a382f;
+  margin-bottom: 16px;
+}
+#share-card .share-skintype b { color: #ff3d2e; }
+
+#share-card .share-age {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px;
+  color: #1c1410;
+  margin-bottom: 8px;
+}
+#share-card .share-age-label {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #8a7868;
+}
+
+#share-card .share-date {
+  margin-top: 24px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a7868;
+}
+
+#share-card .share-footer {
+  margin-top: 20px;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9b9a8;
+}
+
+/* Share button group */
+.share-actions {
+  display: inline-flex;
+  gap: var(--space-2);
+}
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: var(--surface-2);
+  border: 1px solid var(--surface-edge);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-ui),
+              color var(--dur-fast) var(--ease-ui);
+}
+.share-btn:hover {
+  color: var(--ink);
+  background: var(--surface-1);
+}
+.share-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Notes section */
+.notes-section {
+  width: 100%;
+  max-width: 640px;
+  margin: var(--space-5) auto 0;
+}
+.notes-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-3);
+}
+.notes-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color var(--dur-fast) var(--ease-ui);
+}
+.notes-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.notes-textarea::placeholder {
+  color: var(--ink-mute);
+}
+.notes-save {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: opacity var(--dur-fast) var(--ease-ui);
+}
+.notes-save:hover { opacity: 0.85; }
+.notes-save:disabled { opacity: 0.4; cursor: not-allowed; }
+.notes-saved {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--status-good);
+  margin-left: var(--space-2);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-ui);
+}
+.notes-saved.is-visible { opacity: 1; }
+
+/* Skin age display */
+.skin-age {
+  text-align: center;
+  margin-bottom: var(--space-3);
+}
+.skin-age-value {
+  font-family: var(--font-serif);
+  font-size: 48px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  animation: rise 1s .2s both var(--ease-ui);
+}
+.skin-age-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: var(--space-1);
+}
