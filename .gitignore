@@ -27,3 +27,4 @@ migrations/README
 migrations/script.py.mako
 migrations/versions/fb8beace83a7_create_ai_skin_analyses.py
 docs/IMPLEMENTATION.md
+migrations/versions/003_add_notes.py
