@@ -34,6 +34,9 @@ class Analysis(db.Model):
     device_id = db.Column(UUID(as_uuid=True), nullable=True)
     local_date = db.Column(db.Date, nullable=True)
 
+    # Phase 4 — skin journal
+    notes = db.Column(db.Text, nullable=True)
+
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(
         db.DateTime,
@@ -52,6 +55,7 @@ class Analysis(db.Model):
             "error": self.error,
             "device_id": str(self.device_id) if self.device_id else None,
             "local_date": self.local_date.isoformat() if self.local_date else None,
+            "notes": self.notes,
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
