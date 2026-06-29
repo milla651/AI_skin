@@ -20,6 +20,12 @@
     </span><span class="slash">/</span><small id="r-score-100">100</small>
   </h1>
 
+  {# Skin age (Phase 4) #}
+  <div class="skin-age" id="r-skin-age" hidden>
+    <div class="skin-age-value" id="r-skin-age-value">—</div>
+    <div class="skin-age-label">Estimated skin age</div>
+  </div>
+
   {# Skin-type badge #}
   <div id="r-skintype-host">
     {% if analysis.result and analysis.result.skin_type %}
@@ -31,7 +37,7 @@
     {% endif %}
   </div>
 
-  {# Actions row: PDF export #}
+  {# Actions row: PDF export + Share #}
   <div class="report-actions" id="r-actions">
     <button class="pdf-export-btn" id="r-pdf-btn" type="button" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -40,9 +46,19 @@
       </svg>
       Download report
     </button>
+    <div class="share-actions" id="r-share-actions" hidden>
+      <button class="share-btn" id="r-share-copy" type="button">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy card
+      </button>
+      <button class="share-btn" id="r-share-download" type="button">
+        <svg viewBox="0 0 24 24"><path d="M12 3v12M12 15l-4-4M12 15l4-4"/><path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+        Save PNG
+      </button>
+    </div>
   </div>
 
-  {# Portrait with overlay tabs — tabs injected by lib/overlay.js #}
+  {# Portrait with overlay tabs #}
   <div class="r-portrait portrait-wrap" id="r-portrait-wrap">
     <img id="r-image" alt="Your portrait" />
   </div>
@@ -66,6 +82,9 @@
     {% endif %}
   </section>
 
+  {# Routine builder (Phase 4) #}
+  <section class="routine-section" id="r-routine" hidden></section>
+
   <section class="recs" id="r-recs" {% if not (analysis.result and analysis.result.recommendations) %}hidden{% endif %}>
     <h3>Field notes</h3>
     <ul id="r-rec-list">
@@ -74,9 +93,21 @@
       {% endif %}
     </ul>
   </section>
+
+  {# Skin journal / notes (Phase 4) #}
+  <section class="notes-section" id="r-notes-section" hidden>
+    <h3 class="notes-title">📝 Skin journal</h3>
+    <textarea class="notes-textarea" id="r-notes-textarea"
+              placeholder="Started retinol tonight… Ate dairy today… Slept 4 hours…"
+              maxlength="5000"></textarea>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button class="notes-save" id="r-notes-save" type="button">Save note</button>
+      <span class="notes-saved" id="r-notes-saved">✓ Saved</span>
+    </div>
+  </section>
 </main>
 
-{# ===== Hidden PDF template (rasterised by lib/pdf.js) ===== #}
+{# ===== Hidden PDF template ===== #}
 <div id="pdf-template">
   <div class="pdf-header">
     <div class="pdf-brand"><span class="pdf-brand-dot"></span>Skinna</div>
@@ -97,13 +128,23 @@
     <span>skinna · vol. i</span>
   </div>
 </div>
+
+{# ===== Hidden share card ===== #}
+<div id="share-card">
+  <div class="share-brand"><span class="share-brand-dot"></span>Skinna</div>
+  <div class="share-score" id="share-score">—<span class="share-slash">/</span><span class="share-max">100</span></div>
+  <div class="share-skintype" id="share-skintype"></div>
+  <div class="share-age" id="share-age"></div>
+  <div class="share-age-label">Estimated skin age</div>
+  <div class="share-date" id="share-date"></div>
+  <div class="share-footer">skinna.ai · your skin, read softly</div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
   window.__ANALYSIS_ID__ = "{{ analysis.id }}";
 </script>
-{# Phase 3 CDN deps (loaded only on result page) #}
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
@@ -112,5 +153,7 @@
 <script src="{{ url_for('static', filename='js/lib/skin_type.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/lib/overlay.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/lib/pdf.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/lib/share.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/lib/routine.js') }}" defer></script>
 <script src="{{ url_for('static', filename='js/result.js') }}" defer></script>
 {% endblock %}
