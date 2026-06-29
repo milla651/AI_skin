@@ -1,5 +1,5 @@
-/* Lumen :: device.js
-   - Sets the `lumen.tzoff` cookie so the server can compute local_date
+/* Skinna :: device.js
+   - Sets the `skinna.tzoff` cookie so the server can compute local_date
      for streak tracking.
    - Fetches /api/streak and populates the sidebar streak widget.
    - Runs on every page load.
@@ -8,7 +8,7 @@
   // ---- Timezone offset cookie ----
   var offsetMin = new Date().getTimezoneOffset();
   document.cookie =
-    "lumen.tzoff=" + String(offsetMin) + ";path=/;max-age=31536000;SameSite=Lax";
+    "skinna.tzoff=" + String(offsetMin) + ";path=/;max-age=31536000;SameSite=Lax";
 
   // ---- Streak widget ----
   async function loadStreak() {

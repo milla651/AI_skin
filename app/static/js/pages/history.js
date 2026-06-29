@@ -1,4 +1,4 @@
-/* Lumen :: history page — Chart.js trend chart
+/* Skinna :: history page — Chart.js trend chart
    Fetches /api/history/trend, renders a line chart of overall_score vs date.
    Handles 7d / 30d / 90d range buttons.
 */
@@ -151,7 +151,7 @@
   });
 
   // Re-render on theme change (colours shift)
-  window.addEventListener("lumen:theme", async () => {
+  window.addEventListener("skinna:theme", async () => {
     if (chart) {
       const data = await loadTrend(activeDays);
       renderChart(data);

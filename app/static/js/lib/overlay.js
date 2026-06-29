@@ -1,4 +1,4 @@
-/* Lumen :: overlay.js — annotated image overlay (§6.8)
+/* Skinna :: overlay.js — annotated image overlay (§6.8)
    Draws coloured heatmap polygons on a <canvas> over the portrait.
    Tabs: Photo | Redness | Pores | Wrinkles | Pigment
 
@@ -135,5 +135,5 @@
     });
   }
 
-  window.LumenOverlay = { initOverlay };
+  window.SkinnaOverlay = { initOverlay };
 })();

@@ -1,4 +1,4 @@
-/* Lumen :: compare page
+/* Skinna :: compare page
    Fetches /api/compare, renders side-by-side portraits + delta table.
 */
 (() => {

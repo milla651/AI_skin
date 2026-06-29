@@ -1,4 +1,4 @@
-/* Lumen :: SVG radial gauge (270° arc)
+/* Skinna :: SVG radial gauge (270° arc)
    API:
      createGauge(host, { value, label, name, key, tip })
    - `value` 0..100
@@ -185,5 +185,5 @@
     requestAnimationFrame(tick);
   }
 
-  window.LumenGauge = { createGauge, severityFor };
+  window.SkinnaGauge = { createGauge, severityFor };
 })();

@@ -1,4 +1,4 @@
-/* Lumen :: skin-type badge + popover
+/* Skinna :: skin-type badge + popover
    Renders a badge with the skin type + an info popover explaining drivers.
 */
 (function () {
@@ -87,5 +87,5 @@
     });
   }
 
-  window.LumenSkinType = { renderSkinTypeBadge };
+  window.SkinnaSkinType = { renderSkinTypeBadge };
 })();

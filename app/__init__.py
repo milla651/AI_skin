@@ -34,22 +34,22 @@ def create_app(config_class: type[Config] = Config) -> Flask:
     # ------------------------------------------------------------------
     @app.before_request
     def _ensure_device_id():
-        did = request.cookies.get("lumen.did")
+        did = request.cookies.get("skinna.did")
         if not did:
             did = str(uuid.uuid4())
         g.device_id = did
         # tz offset sent by lib/device.js; default 0 (UTC)
         try:
-            g.tz_offset = int(request.cookies.get("lumen.tzoff", "0"))
+            g.tz_offset = int(request.cookies.get("skinna.tzoff", "0"))
         except (ValueError, TypeError):
             g.tz_offset = 0
 
     @app.after_request
     def _set_device_cookie(resp):
         did = g.get("device_id")
-        if did and request.cookies.get("lumen.did") != did:
+        if did and request.cookies.get("skinna.did") != did:
             resp.set_cookie(
-                "lumen.did",
+                "skinna.did",
                 did,
                 max_age=60 * 60 * 24 * 365,
                 httponly=True,

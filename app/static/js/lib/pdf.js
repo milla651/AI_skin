@@ -1,4 +1,4 @@
-/* Lumen :: pdf.js — client-side PDF export (§6.9)
+/* Skinna :: pdf.js — client-side PDF export (§6.9)
    Uses html2canvas + jsPDF to rasterise a hidden #pdf-template node
    and wrap it as an A4 page.
 
@@ -60,7 +60,7 @@
 
       var shortId = (analysisId || "unknown").slice(0, 8);
       var dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-      pdf.save("lumen-reading-" + shortId + "-" + dateStr + ".pdf");
+      pdf.save("skinna-reading-" + shortId + "-" + dateStr + ".pdf");
     } catch (err) {
       console.error("[pdf] Export failed:", err);
       alert("PDF export failed. Please try again.");
@@ -73,5 +73,5 @@
     }
   }
 
-  window.LumenPDF = { exportPDF: exportPDF };
+  window.SkinnaPDF = { exportPDF: exportPDF };
 })();

@@ -1,11 +1,11 @@
-/* Lumen :: theme manager
-   - Reads/writes `lumen.theme` in localStorage ("light" | "dark" | "system")
+/* Skinna :: theme manager
+   - Reads/writes `skinna.theme` in localStorage ("light" | "dark" | "system")
    - Sets [data-theme] on <html>
    - Falls back to prefers-color-scheme when mode is "system"
    - Init is also exposed inline in <head> to prevent flash-of-wrong-theme.
 */
 (function () {
-  const STORAGE_KEY = "lumen.theme";
+  const STORAGE_KEY = "skinna.theme";
   const MODES = ["light", "dark", "system"];
 
   function systemPref() {
@@ -44,7 +44,7 @@
 
   function dispatch() {
     window.dispatchEvent(
-      new CustomEvent("lumen:theme", {
+      new CustomEvent("skinna:theme", {
         detail: { mode: read(), resolved: resolved(read()) },
       })
     );
@@ -76,7 +76,7 @@
   }
 
   // Public API
-  window.LumenTheme = { read, set, cycle, resolved, apply };
+  window.SkinnaTheme = { read, set, cycle, resolved, apply };
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", wireToggles);

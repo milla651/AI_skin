@@ -1,4 +1,4 @@
-/* Lumen :: Aurora — curtain sheet
+/* Skinna :: Aurora — curtain sheet
    - Opens with ▶ in the play bar (or any [data-open-sheet] in the future)
    - Drag/drop + file picker + clipboard paste (⌘V / Ctrl+V)
    - Flip to webcam, capture-to-canvas

@@ -1,4 +1,4 @@
-/* Lumen :: tips — looks up advice per (metric, severity).
+/* Skinna :: tips — looks up advice per (metric, severity).
    Tips are loaded from /static/data/tips.json once and cached.
 */
 (function () {
@@ -38,5 +38,5 @@
     return m[sev] || m["warn"] || null;
   }
 
-  window.LumenTips = { getTip, loadAll, severityFor };
+  window.SkinnaTips = { getTip, loadAll, severityFor };
 })();

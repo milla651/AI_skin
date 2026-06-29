@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Lumen · Reading #{{ analysis.id|string|truncate(8, True, '') }}{% endblock %}
+{% block title %}Skinna · Reading #{{ analysis.id|string|truncate(8, True, '') }}{% endblock %}
 
 {% block page_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/result.css') }}" />
@@ -79,7 +79,7 @@
 {# ===== Hidden PDF template (rasterised by lib/pdf.js) ===== #}
 <div id="pdf-template">
   <div class="pdf-header">
-    <div class="pdf-brand"><span class="pdf-brand-dot"></span>Lumen</div>
+    <div class="pdf-brand"><span class="pdf-brand-dot"></span>Skinna</div>
     <div class="pdf-date" id="pdf-date"></div>
   </div>
   <div class="pdf-score">
@@ -94,7 +94,7 @@
   </div>
   <div class="pdf-footer">
     <span id="pdf-id"></span>
-    <span>lumen · vol. i</span>
+    <span>skinna · vol. i</span>
   </div>
 </div>
 {% endblock %}

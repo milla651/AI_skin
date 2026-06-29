@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{% block title %}Lumen · Aurora{% endblock %}</title>
+  <title>{% block title %}Skinna · Aurora{% endblock %}</title>
 
   {# --- Anti-FOUC: resolve theme before any CSS loads --- #}
   <script>
     (function () {
       try {
-        var m = localStorage.getItem("lumen.theme");
+        var m = localStorage.getItem("skinna.theme");
         if (m !== "light" && m !== "dark" && m !== "system") m = "system";
         var r = m === "system"
           ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")

@@ -1,4 +1,4 @@
-/* Lumen :: result poller (Phase 1–3)
+/* Skinna :: result poller (Phase 1–3)
    Polls /api/result/<id> until done, then:
      - hydrates score & skin-type badge
      - renders 6 radial gauges with severity colours + per-metric tips
@@ -84,22 +84,22 @@
       }
 
       // Skin type
-      if (els.skintype && window.LumenSkinType) {
-        window.LumenSkinType.renderSkinTypeBadge(els.skintype, r);
+      if (els.skintype && window.SkinnaSkinType) {
+        window.SkinnaSkinType.renderSkinTypeBadge(els.skintype, r);
       }
 
       // Gauges
-      if (els.gauges && window.LumenGauge) {
+      if (els.gauges && window.SkinnaGauge) {
         els.gauges.innerHTML = "";
         for (const m of METRICS) {
           const v = Number(r.metrics?.[m.key]);
           if (Number.isFinite(v)) {
             const host = document.createElement("article");
             els.gauges.appendChild(host);
-            const tip = window.LumenTips
-              ? await window.LumenTips.getTip(m.key, v).catch(() => null)
+            const tip = window.SkinnaTips
+              ? await window.SkinnaTips.getTip(m.key, v).catch(() => null)
               : null;
-            window.LumenGauge.createGauge(host, { ...m, value: v, tip });
+            window.SkinnaGauge.createGauge(host, { ...m, value: v, tip });
           }
         }
       }
@@ -116,8 +116,8 @@
       }
 
       // ---- Phase 3: Overlay ----
-      if (r.regions && els.portraitWrap && els.img && window.LumenOverlay) {
-        window.LumenOverlay.initOverlay(els.portraitWrap, els.img, r.regions);
+      if (r.regions && els.portraitWrap && els.img && window.SkinnaOverlay) {
+        window.SkinnaOverlay.initOverlay(els.portraitWrap, els.img, r.regions);
       }
 
       // ---- Phase 3: PDF export ----
@@ -125,8 +125,8 @@
         els.pdfBtn.hidden = false;
         populatePdfTemplate(r, data);
         els.pdfBtn.addEventListener("click", () => {
-          if (window.LumenPDF) {
-            window.LumenPDF.exportPDF(id);
+          if (window.SkinnaPDF) {
+            window.SkinnaPDF.exportPDF(id);
           }
         });
       }
