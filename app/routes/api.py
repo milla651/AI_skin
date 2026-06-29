@@ -151,6 +151,27 @@ def result(analysis_id):
 
 
 # =========================================================================
+#  PATCH /api/result/<id>/notes  (Phase 4 — skin journal)
+# =========================================================================
+
+@api_bp.route("/result/<uuid:analysis_id>/notes", methods=["PATCH"])
+def update_notes(analysis_id):
+    """Save or update the user's journal note for a reading."""
+    analysis = db.session.get(Analysis, analysis_id)
+    if analysis is None:
+        abort(404)
+
+    payload = request.get_json(silent=True) or {}
+    notes = payload.get("notes", "")
+    if len(notes) > 5000:
+        return jsonify({"error": "Notes too long (max 5000 chars)"}), 400
+
+    analysis.notes = notes.strip() if notes else None
+    db.session.commit()
+    return jsonify({"id": str(analysis.id), "notes": analysis.notes})
+
+
+# =========================================================================
 #  GET /api/history/trend?days=30  (§6.5)
 # =========================================================================
 
